@@ -10,6 +10,8 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0" # Run at midnight every Sunday
 
 jobs:
   build:
