@@ -27,7 +27,7 @@ jobs:
       - name: Read Caddy version
         id: caddy_version
         run: |
-          CADDY_VERSION=$(cat VERSION)
+          CADDY_VERSION=$(cat Dockerfile | grep ARG | grep CADDY_VERSION | cut -d'=' -f2 | tr -d '[:space:]')
           echo "CADDY_VERSION=${CADDY_VERSION}" >> $GITHUB_ENV
           echo "caddy_version=${CADDY_VERSION}" >> $GITHUB_OUTPUT
 
@@ -67,7 +67,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            CADDY_VERSION=${{ env.CADDY_VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
